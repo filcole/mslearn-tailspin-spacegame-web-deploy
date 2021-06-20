@@ -3,8 +3,6 @@ trigger:
 
 variables:
   buildConfiguration: "Release"
-  wwwrootDir: "Tailspin.SpaceGame.Web/wwwroot"
-  dotnetSdkVersion: "3.1.300"
 
 stages:
   - stage: "Build"
@@ -23,7 +21,7 @@ stages:
 
         steps:
           - task: UseDotNet@2
-            displayName: "Use .NET Core SDK $(dotnetSdkVersion)"
+            displayName: "Use .NET SDK $(dotnetSdkVersion)"
             inputs:
               version: "$(dotnetSdkVersion)"
 
@@ -86,7 +84,6 @@ stages:
                 - task: AzureWebApp@1
                   displayName: "Azure App Service Deploy: website"
                   inputs:
-                    appType: webAppLinux
                     azureSubscription: "Resource Manager - Tailspin - Space Game"
                     appName: "$(WebAppName)"
-                    package: "($Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip"
+                    package: "$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip"
